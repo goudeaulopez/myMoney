@@ -1,18 +1,62 @@
-import {View,Text,StyleSheet} from "react-native"
 
-const SignUpScreen = () => {
-    return(
-        <View style={styles.container}>
-            <Text>SignUpScreen</Text>
-        </View>
-    )
-}
+import { View, StyleSheet, TouchableOpacity,Text } from 'react-native';
+import Spacer from '../components/Spacer';
+import AuthForm from '../components/AuthForm';
+import { useSignUp } from '@clerk/clerk-expo';
+
+const SignUpScreen = ({ navigation }) => {
+  const { signUp, isLoaded } = useSignUp();
+
+  const onSignUp = async ({email,password}) => {
+    if (!isLoaded) return;
+
+    try {
+      await signUp.create({
+        emailAddress: email,
+        password
+      });
+      await signUp.prepareVerification({ strategy: 'email_code' });
+
+      navigation.navigate('ValidationCode')
+    } catch (err) {
+      console.log('Sign up error: ', err);
+     
+    }
+  };
+  return (
+    <View style={styles.container}>
+      <AuthForm
+        headerText="Sign Up for MyMoney"
+        submitButtonText="Sign Up"
+        onSubmit={onSignUp}
+      />
+      <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+        <Spacer>
+          <Text style={styles.link}>
+            Already have an account? Sign in instead
+          </Text>
+        </Spacer>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+SignUpScreen.navigationOptions = () => {
+  return {
+    header: () => false,
+  };
+};
+
 const styles = StyleSheet.create({
-container: {
+  container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 250,
   },
-})
-export default SignUpScreen
+  link: {
+    color: 'blue',
+    textAlign:"center"
+  },
+});
+
+export default SignUpScreen;

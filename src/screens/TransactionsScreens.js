@@ -1,12 +1,30 @@
+import { useEffect,useState } from "react"
 import {View,Text,StyleSheet} from "react-native"
+import { useAuth } from "@clerk/clerk-expo";
+import { SignOutButton } from "../components/SignOutButton";
 
-const TransactionsScreen = () => {
+const TransactionsScreens = ({ navigation }) => {
+
+
+  useEffect( ()=>{
+ 
+    
+  }, []);
+
+
     return(
         <View style={styles.container}>
-            <Text>TransactionsScreen</Text>
+            <Text>TransactionsScreens</Text>
+            
+            <SignOutButton navigation={navigation}/>
         </View>
     )
 }
+TransactionsScreens.navigationOptions = () => {
+  return {
+    header: () => false,
+  };
+};
 const styles = StyleSheet.create({
 container: {
     flex: 1,
@@ -15,4 +33,5 @@ container: {
     justifyContent: 'center',
   },
 })
-export default TransactionsScreen
+export default TransactionsScreens
+

@@ -7,6 +7,11 @@ const CreateTransactionScreen = () => {
         </View>
     )
 }
+CreateTransactionScreen.navigationOptions = () => {
+  return {
+    header: () => false,
+  };
+};
 const styles = StyleSheet.create({
 container: {
     flex: 1,
