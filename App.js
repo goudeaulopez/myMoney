@@ -19,7 +19,7 @@ import { tokenCache } from '@clerk/clerk-expo/token-cache'
 
 const switchNavigator = createSwitchNavigator({
   loginFlow:createStackNavigator({
-    SignIn:SignInScreen,
+   SignIn:SignInScreen,
     SignUp:SignUpScreen,
     ValidationCode:ValidationCodeScreen
  }),

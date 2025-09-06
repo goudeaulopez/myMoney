@@ -1,36 +1,12 @@
 import {useSignIn,useAuth } from '@clerk/clerk-expo';
-import { useEffect,useState } from "react"
 import { View, StyleSheet, TouchableOpacity,Text } from 'react-native';
 import Spacer from '../components/Spacer';
 import AuthForm from '../components/AuthForm';
 
 const SignInScreen = ({ navigation }) => {
 const { signIn, isLoaded, setActive } = useSignIn();
+const { getToken, userId} = useAuth();
 
-  const { getToken, userId} = useAuth();
-   const [token, setToken] = useState(null);
-  const [uid, setUid] = useState(null);
-
-  useEffect(()=>{
-    fetchAuthData();
-  }, []);
-
-   const fetchAuthData = async () => {
-      try {
-        if (!isLoaded) return; 
-
-        setUid(userId);
-
-        const jwt = await getToken();
-        setToken(jwt);
-
-        console.log("User ID:", userId);
-        console.log("JWT:", jwt);
-
-      } catch (err) {
-        console.error("Error fetching auth data:", err);
-      }
-    };
 
 
 const onSignIn = async ({email,password}) => {
@@ -44,7 +20,9 @@ const onSignIn = async ({email,password}) => {
 
       if (signInAttempt.status === 'complete') {
         setActive({ session: signInAttempt.createdSessionId });
-
+        const token = await getToken()
+        console.log(token);
+        
         navigation.navigate('mainFlow')
 
       } else {
@@ -72,8 +50,7 @@ const onSignIn = async ({email,password}) => {
           </Text>
         </Spacer>
       </TouchableOpacity>
-      <Text>{token?token:"tienes que entrar"}</Text>
-      <Text>{uid?uid:"tienes que entrar"}</Text>
+    
     </View>
   );
 };
