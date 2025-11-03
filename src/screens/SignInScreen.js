@@ -49,7 +49,7 @@ const onSignIn = async ({email,password}) => {
       <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
         <Spacer>
           <Text style={styles.link}>
-            Don't have an account? Sign Up instead
+            Don't have an account? Sign Up instead!!
           </Text>
         </Spacer>
       </TouchableOpacity>
