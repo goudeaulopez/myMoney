@@ -18,6 +18,7 @@ import { ClerkProvider } from '@clerk/clerk-expo'
 import { tokenCache } from '@clerk/clerk-expo/token-cache'
 // auth context
 import { Provider as AuthProvider } from './src/context/AuthContext';
+import { Provider as TransactionProvider } from './src/context/TransactionContext';
 
 
 const switchNavigator = createSwitchNavigator({
@@ -44,7 +45,9 @@ export default () => {
         
           <ClerkProvider tokenCache={tokenCache} publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}>
              <AuthProvider>
+               <TransactionProvider>
                 <App  ref={(navigator) => {setNavigator(navigator)}} /> 
+                  </TransactionProvider>
                   </AuthProvider>
                      </ClerkProvider>
   )

@@ -1,18 +1,25 @@
-import { useContext } from "react";
+import { useContext ,useEffect} from "react";
 import {View,Text,StyleSheet} from "react-native"
 import { SignOutButton } from "../components/SignOutButton";
-import {Context as AuthContext} from "../context/AuthContext"
+//import {NavigationEvents} from "react-navigation"
+import {Context as TransactionContext} from "../context/TransactionContext"
 
 const TransactionsScreens = ({ navigation }) => {
-   const {state} = useContext(AuthContext)
-  
-console.log(state);
- return(
-        <View style={styles.container}>
+   const {state,fetchTransaction } = useContext(TransactionContext)
+
+   useEffect(()=>{
+      fetchTransaction()
+   },[])
+console.log(JSON.stringify(state.transactions,null,2));
+
+  return(
+      
+        
+         <View style={styles.container}>
             <Text>TransactionsScreens</Text>
-            
             <SignOutButton navigation={navigation}/>
           </View>
+          
     )
 }
 TransactionsScreens.navigationOptions = () => {
